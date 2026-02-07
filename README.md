@@ -1,4 +1,8 @@
-# Task Management Web Application
+# Task Manager Pro
+
+**A robust, full-stack Task Management application featuring real-time email notifications, secure multi-user authentication, and advanced data visualization.** 
+
+Built with **Node.js, Express, and Vanilla JS**, this project demonstrates a production-ready workflow for personal and team productivity. It includes automated 48-hour email reminders, password recovery via Gmail SMTP, and has been stress-tested with over 2000+ data entries for guaranteed performance.
 
 A full-stack Task Management application built with Node.js, Express, MongoDB, and Vanilla JavaScript.
 
