@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            align-items: center;
+        }
+
+        .auth-container {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid var(--border-color);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.75rem;
+        }
+
+        .auth-header p {
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1><i class="fas fa-check-double"></i> Task Manager</h1>
+            <p>Welcome back! Please login.</p>
+        </div>
+        <form id="login-form">
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label>Username</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label>Password</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn-save" style="margin-top: 0; width: 100%;">Login</button>
+        </form>
+        <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
+            Don't have an account? <a href="signup.html"
+                style="color: var(--primary-color); font-weight: 600; text-decoration: none;">Sign Up</a>
+        </p>
+        <p style="text-align: center; margin-top: 0.75rem; font-size: 0.9rem;">
+            <a href="forgot-password.html" style="color: var(--text-muted); text-decoration: none;">Forgot Password?</a>
+        </p>
+    </div>
+    <script>
+        const API_URL = '/api/auth/login';
+        const loginForm = document.getElementById('login-form');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('username', data.username);
+                    window.location.href = 'index.html';
+                } else {
+                    alert(data.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Login failed');
+            }
+        });
+    </script>
+</body>
+
+</html>
